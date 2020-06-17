@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -8,9 +9,7 @@ namespace SshModLoader
     public class AppManager : MonoBehaviour
     {
         private UIManager uiManager;
-
         public List<App> apps = new List<App>();
-
 
         // Start is called before the first frame update
         void Start()
@@ -21,44 +20,25 @@ namespace SshModLoader
             uiManager.UpdateAppsDropdownList(apps);
         }
 
-        // Update is called once per frame
-        void Update()
+        public void SaveAppsToList(List<App> appList)
         {
+            foreach (var app in appList)
+            {
+                var appIndexInList = apps.FindIndex(x => x.name == app.name);
 
-        }
+                if (appIndexInList >= 0)
+                {
+                    apps[appIndexInList] = app;
+                }
+                else
+                {
+                    apps.Add(app);
+                }
+            }
 
-        public void DeleteCurrentApp()
-        {
-            var appName = uiManager.GetAppNameFromUI();
-            apps.RemoveAll(x => x.name == appName);
+            apps = apps.OrderBy(x => x.name).ToList();
+
             uiManager.UpdateAppsDropdownList(apps);
-        }
-
-        public void EditApp()
-        {
-            var appName = uiManager.GetAppNameFromUI();
-
-            var appSettings = apps.Find(x => x.name == appName);
-
-            if (appSettings != null)
-                uiManager.SetAppSettingsPopupFields(appSettings);
-        }
-
-        public void SaveCurrentAppToList()
-        {
-            var app = uiManager.GetAppSettingsFromUI();
-            var appIndexInList = apps.FindIndex(x => x.name == app.name);
-
-            if (appIndexInList >= 0)
-            {
-                apps[appIndexInList] = app;
-            }
-            else
-            {
-                apps.Add(app);
-            }
-
-            uiManager.UpdateAppsDropdownList(apps, apps.Count - 1);
         }
 
         private void SaveAppsToPlayerPrefs()
@@ -69,10 +49,14 @@ namespace SshModLoader
 
         private void LoadAppsFromPlayerPrefs()
         {
-            var savedApps = PlayerPrefs.GetString("Apps");
-            if (savedApps != "")
+            var savedAppsJson = PlayerPrefs.GetString("Apps");
+            if (savedAppsJson != "")
             {
-                apps = JsonConvert.DeserializeObject<List<App>>(savedApps);
+                var loadedApps = JsonConvert.DeserializeObject<List<App>>(savedAppsJson);
+                foreach (var app in loadedApps)
+                {
+                    app.loadedFromPrefs = true;
+                }
             }
         }
 

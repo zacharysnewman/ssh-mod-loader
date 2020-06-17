@@ -10,8 +10,10 @@ namespace SshModLoader
     public class App
     {
         public string name = "";
+        public string version = "";
         public string path = "";
         public string updatePath = "";
+        public bool loadedFromPrefs = false;
 
         public List<Mod> mods = new List<Mod>();
 

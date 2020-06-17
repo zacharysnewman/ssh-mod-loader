@@ -7,10 +7,7 @@ namespace SshModLoader
 {
     public class SaveBtnActivator : MonoBehaviour
     {
-        public InputField appNameFld;
-        public InputField appPathFld;
-        public InputField appUpdatePathFld;
-
+        public InputField[] requiredFields;
         private Button saveBtn;
 
         // Start is called before the first frame update
@@ -22,7 +19,16 @@ namespace SshModLoader
         // Update is called once per frame
         void Update()
         {
-            bool canSave = !(IsNullEmptyOrWhitespace(appNameFld.text) || IsNullEmptyOrWhitespace(appPathFld.text));
+            bool canSave = true;
+            foreach (var fld in requiredFields)
+            {
+                if (IsNullEmptyOrWhitespace(fld.text))
+                {
+                    canSave = false;
+                    break;
+                }
+            }
+
             saveBtn.interactable = canSave;
         }
 

@@ -57,6 +57,7 @@ namespace SshModLoader
                 {
                     app.loadedFromPrefs = true;
                 }
+                apps = loadedApps;
             }
         }
 

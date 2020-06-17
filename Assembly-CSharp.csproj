@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>     <Compile Include="Assets\Scripts\Managers\AppManager.cs" />
      <Compile Include="Assets\Scripts\Managers\ModManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\SshManager.cs" />
      <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
      <Compile Include="Assets\Scripts\Objects\App.cs" />
      <Compile Include="Assets\Scripts\Objects\FileWithName.cs" />
@@ -54,7 +55,6 @@
      <Compile Include="Assets\Scripts\Static (mark static)\FileManager.cs" />
      <Compile Include="Assets\Scripts\Static (mark static)\Paths.cs" />
      <Compile Include="Assets\Scripts\Static (mark static)\PlayerPrefsSerializer.cs" />
-     <Compile Include="Assets\Scripts\Static (mark static)\SshManager.cs" />
      <Compile Include="Assets\Scripts\UI Activators\SaveBtnActivator.cs" />
      <Compile Include="Assets\Scripts\UI Utilities\LoadingBar.cs" />
      <Compile Include="Assets\Scripts\Unused\AreaEffect.cs" />

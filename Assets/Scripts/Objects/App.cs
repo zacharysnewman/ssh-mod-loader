@@ -12,17 +12,15 @@ namespace SshModLoader
         public string name = "";
         public string version = "";
         public string path = "";
-        public string updatePath = "";
         public bool loadedFromPrefs = false;
 
         public List<Mod> mods = new List<Mod>();
 
         public App() { }
-        public App(string name, string path, string updatePath)
+        public App(string name, string path)
         {
             this.name = name;
             this.path = path;
-            this.updatePath = updatePath;
         }
 
         public void RemoveMod(string modName)

@@ -96,8 +96,10 @@ namespace SshModLoader
 
             var app = new App();
 
+            var appFullPath = Path.Combine(dir, FindAppInDirectory(client, dir));
+
             stopwatch.Start();
-            var path = Path.Combine(dir, FindAppInDirectory(client, dir), "Info.plist");
+            var path = Path.Combine(appFullPath, "Info.plist");
             stopwatch.Stop();
             Debug.Log("FindAppInDirectory (" + dir + "): " + stopwatch.ElapsedMilliseconds);
 
@@ -106,7 +108,7 @@ namespace SshModLoader
                 Debug.LogError("Failed to find file at: " + path);
                 var appSplit = path.Split('/');
                 var appDir = appSplit[appSplit.Length - 2];
-                return new App(appDir, "", "");
+                return new App(appDir, "");
                 // return null;
             }
 
@@ -138,7 +140,9 @@ namespace SshModLoader
                 app.name = plist["CFBundleDisplayName"];
             else
                 app.name = plist["CFBundleName"];
+
             app.version = plist["CFBundleVersion"];
+            app.path = appFullPath;
 
             return app;
         }

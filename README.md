@@ -17,4 +17,4 @@ Facilitates managing and installing mobile app mods to your device via SSH.
 
 ### Fetch Apps from Device
 * Enter device WiFi IP Address, the SSH User (default: root), and the SSH Password (default: alpine)
-* Click the Fetch Apps button (if you have trouble with this, make sure you're device is unlocked and connected to WiFi)
+* Click the "Fetch Apps" button (if you have trouble, make sure your device is unlocked and connected to WiFi)

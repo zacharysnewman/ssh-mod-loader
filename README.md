@@ -4,7 +4,7 @@ Facilitates managing and installing mobile app mods to your device via SSH.
 ## Mobile Device Requirements
 - A jailbroken iOS device (jailbreak required for root access)
 - OpenSSH installed (or similar) to allow SSHing into the device
-- Optional: Filza app (or similar) from Cydia to view or modify files directly on the device **(this is dangerous!)**
+- Optional: Filza app (or similar) from Cydia to view or modify files directly on the device **(Caution: Modifying files directly can be dangerous!)**
 
 ## Computer Requirements
 - Windows, Mac, or Linux (any system the Unity Editor can run on)

@@ -4,7 +4,8 @@ Facilitates managing and installing mobile app mods to your device via SSH.
 ## Mobile Device Requirements
 - A jailbroken iOS device (jailbreak required for root access)
 - OpenSSH installed (or similar) to allow SSHing into the device
-- Optional: Filza app (or similar) from Cydia to view or modify files directly on the device 
+- Optional: Filza app (or similar) from Cydia to view or modify files directly on the device
+
 **(Caution: Modifying files directly can potentially brick your device!)**
 
 ## Computer Requirements

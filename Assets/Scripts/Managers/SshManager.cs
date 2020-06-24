@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System;
 ////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +58,7 @@ namespace SshModLoader
                 loadingBar.NewLoader("Retrieve App List", 1, "Getting app parent directories...", "Loading...");
                 yield return new WaitForEndOfFrame();
 
-                var appDirectories = ListDirectory(client, Paths.basePath);
+                var appDirectories = ListDirectory(client, Paths.remote.apps);
 
                 loadingBar.NewLoader("Retrieve App List", appDirectories.Count, "Getting app names and paths...", appDirectories[0].FullName);
                 yield return new WaitForEndOfFrame();
@@ -171,6 +172,46 @@ namespace SshModLoader
             return directories;
         }
 
+        public List<string> filePaths;
+        System.Diagnostics.Stopwatch s = new System.Diagnostics.Stopwatch();
+        public string pathOffset = "";
+        public IEnumerator GetAllFilePaths(SftpClient client, string dirName, string prevLoader = "")
+        {
+            loadingBar.NewLoader("Backing Up App Files", 1, "Enumerating files...", prevLoader);
+            yield return new WaitForEndOfFrame();
+            pathOffset = dirName;
+            Debug.Log(pathOffset);
+            s.Start();
+            yield return StartCoroutine(_GetAllFilePaths(client, dirName, prevLoader));
+            s.Stop();
+            Debug.Log("Done.");
+        }
+
+        private IEnumerator _GetAllFilePaths(SftpClient client, string dirName, string prevLoader = "")
+        {
+            yield return new WaitForEndOfFrame();
+
+            foreach (var entry in client.ListDirectory(dirName))
+            {
+                if (entry.Name == "." || entry.Name == "..")
+                    continue;
+
+                if (entry.IsDirectory)
+                {
+                    // Debug.Log(entry.FullName);
+                    yield return StartCoroutine(_GetAllFilePaths(client, entry.FullName, entry.FullName));
+                }
+                else
+                {
+                    var shortPath = entry.FullName.Replace(pathOffset, "");
+                    // Debug.Log("Added: " + shortPath);
+                    filePaths.Add(shortPath);
+                    loadingBar.NewLoader("Backing Up App Files", 1, "Enumerating files...", entry.FullName);
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+        }
+
         // IEnumerator ListAllDirectory(SftpClient client, string dirName)
         // {
         //     if (!client.Exists(dirName))
@@ -249,16 +290,10 @@ namespace SshModLoader
 
                 Debug.Log(filePath);
 
-                /* if (Sftp.Exists(Paths.updatePath + filePath))
+                if (client.Exists(Paths.remote.apps))
                 {
-                    Debug.Log("Downloading updated at " + Paths.updatePath + filePath);
-                    Sftp.DownloadFile(Paths.updatePath + filePath, stream);
-                }
-                else */
-                if (client.Exists(Paths.basePath))
-                {
-                    Debug.Log("Downloading original at " + Paths.basePath + filePath);
-                    client.DownloadFile(Paths.basePath + filePath, stream);
+                    Debug.Log("Downloading at " + Paths.remote.apps + filePath);
+                    client.DownloadFile(Paths.remote.apps + filePath, stream);
                 }
                 else
                 {

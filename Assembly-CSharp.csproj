@@ -2,6 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
+    <CscToolPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Tools/RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.sh</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -44,19 +46,34 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
-  <ItemGroup>     <Compile Include="Assets\Scripts\Managers\AppManager.cs" />
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\Managers\AppManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\LocalRemoteInterface.cs" />
      <Compile Include="Assets\Scripts\Managers\ModManager.cs" />
      <Compile Include="Assets\Scripts\Managers\SshManager.cs" />
      <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
      <Compile Include="Assets\Scripts\Objects\App.cs" />
-     <Compile Include="Assets\Scripts\Objects\FileWithName.cs" />
+     <Compile Include="Assets\Scripts\Objects\FilePlus.cs" />
      <Compile Include="Assets\Scripts\Objects\Mod.cs" />
      <Compile Include="Assets\Scripts\Objects\PList.cs" />
+     <Compile Include="Assets\Scripts\Objects\SshDeviceSettings.cs" />
      <Compile Include="Assets\Scripts\Static (mark static)\FileManager.cs" />
      <Compile Include="Assets\Scripts\Static (mark static)\Paths.cs" />
-     <Compile Include="Assets\Scripts\Static (mark static)\PlayerPrefsSerializer.cs" />
+     <Compile Include="Assets\Scripts\Static (mark static)\Paths\Local.cs" />
+     <Compile Include="Assets\Scripts\Static (mark static)\Paths\Remote.cs" />
+     <Compile Include="Assets\Scripts\Static (mark static)\Prefs.cs" />
      <Compile Include="Assets\Scripts\UI Activators\SaveBtnActivator.cs" />
+     <Compile Include="Assets\Scripts\UI Utilities\IPValidator.cs" />
      <Compile Include="Assets\Scripts\UI Utilities\LoadingBar.cs" />
+     <Compile Include="Assets\Scripts\UI Utilities\SshSettingsPopup.cs" />
      <Compile Include="Assets\Scripts\Unused\AreaEffect.cs" />
      <Compile Include="Assets\Scripts\Unused\Convert.cs" />
      <Compile Include="Assets\Scripts\Unused\CSV\Character.cs" />
@@ -116,9 +133,6 @@
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>/Users/zacknewman/Projects/SSH Mod Loader/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine">
- <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -297,9 +311,6 @@
  <Reference Include="UnityEngine.XRModule">
  <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor">
- <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
- </Reference>
  <Reference Include="Renci.SshNet">
  <HintPath>/Users/zacknewman/Projects/SSH Mod Loader/Assets/Plugins/Renci.SshNet.dll</HintPath>
  </Reference>
@@ -314,9 +325,6 @@
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Common">
  <HintPath>/Applications/Unity/Hub/Editor/2019.2.9f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>

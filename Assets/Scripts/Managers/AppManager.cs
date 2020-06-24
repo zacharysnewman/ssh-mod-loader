@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace SshModLoader
@@ -14,7 +13,8 @@ namespace SshModLoader
         // Start is called before the first frame update
         void Start()
         {
-            LoadAppsFromPlayerPrefs();
+            // Debug.Log(Application.persistentDataPath);
+            LoadApps();
 
             uiManager = GetComponent<UIManager>();
             uiManager.UpdateAppsDropdownList(apps);
@@ -41,29 +41,19 @@ namespace SshModLoader
             uiManager.UpdateAppsDropdownList(apps);
         }
 
-        private void SaveAppsToPlayerPrefs()
+        private void SaveApps()
         {
-            var json = JsonConvert.SerializeObject(apps);
-            PlayerPrefs.SetString("Apps", json);
+            Prefs.SaveAppSettings(apps);
         }
 
-        private void LoadAppsFromPlayerPrefs()
+        private void LoadApps()
         {
-            var savedAppsJson = PlayerPrefs.GetString("Apps");
-            if (savedAppsJson != "")
-            {
-                var loadedApps = JsonConvert.DeserializeObject<List<App>>(savedAppsJson);
-                foreach (var app in loadedApps)
-                {
-                    app.loadedFromPrefs = true;
-                }
-                apps = loadedApps;
-            }
+            apps = Prefs.LoadAppSettings();
         }
 
         private void OnApplicationQuit()
         {
-            SaveAppsToPlayerPrefs();
+            SaveApps();
         }
     }
 }

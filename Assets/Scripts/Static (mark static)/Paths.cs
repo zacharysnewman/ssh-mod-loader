@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace SshModLoader
 {
     public static class Paths
     {
-        public static string basePath = "/var/containers/Bundle/Application/";
-        // public static string updatePath = "/var/mobile/Containers/Data/Application/";
+        public readonly static Remote remote = new Remote();
+        public readonly static Local local = new Local();
     }
 }
